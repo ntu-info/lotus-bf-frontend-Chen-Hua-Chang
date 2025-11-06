@@ -1,19 +1,10 @@
-// vite.config.js
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { fileURLToPath, URL } from 'node:url'
 
+// https://vitejs.dev/config/
 export default defineConfig({
-  base: '/',
-
   plugins: [react()],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
-    }
-  },
-  server: {
-    allowedHosts: ['mil.psy.ntu.edu.tw']
-  }
+  // *** 確保 base 被設為 '/' ***
+  // 這樣打包後的 index.html 才會正確讀取 CSS 和 JS
+  base: '/' 
 })
-
