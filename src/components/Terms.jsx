@@ -1,3 +1,6 @@
+// src/components/Terms.jsx
+// *** 這是步驟 17 的「置頂搜尋框」版本 ***
+
 import { API_BASE } from '../api'
 import { useEffect, useMemo, useState } from 'react'
 
@@ -37,10 +40,24 @@ export function Terms ({ onPickTerm }) {
   }, [terms, search])
 
   return (
-    <div className='terms'>
-      {/* Removed internal <h2> to avoid double "Terms" header. The bold title now comes from App.jsx card__title. */}
-
-      <div className='terms__controls'>
+    // *** 1. 修改：讓 .terms 容器成為 flex-column ***
+    <div className='terms' style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
+      {/* *** 2. 修改：讓 .terms__controls 
+           (A) 不壓縮 (flexShrink: 0)
+           (B) 成為「置頂」元素 (position: sticky)
+           (C) 加上和卡片一樣的背景色，才不會透明
+      */}
+      <div 
+        className='terms__controls' 
+        style={{ 
+          flexShrink: 0, 
+          position: 'sticky', 
+          top: 0, 
+          background: '#AADFC8', // 必須和卡片背景色一致
+          paddingBottom: '12px',  // 增加和列表的間距
+          zIndex: 10              // 確保它在最上層
+        }}
+      >
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -69,8 +86,18 @@ export function Terms ({ onPickTerm }) {
         </div>
       )}
 
+      {/* *** 3. 修改：讓 .terms__list 
+           (A) 佔滿剩餘空間 (flexGrow: 1)
+           (B) 自己負責捲動 (overflowY: auto)
+      */}
       {!loading && !err && (
-        <div className='terms__list'>
+        <div 
+          className='terms__list no-scrollbar' // 加上 no-scrollbar
+          style={{ 
+            flexGrow: 1, 
+            overflowY: 'auto' 
+          }}
+        >
           {filtered.length === 0 ? (
             <div className='terms__empty'>No terms found</div>
           ) : (
@@ -78,14 +105,14 @@ export function Terms ({ onPickTerm }) {
               {filtered.slice(0, 500).map((t, idx) => (
                 <li key={`${t}-${idx}`} className='terms__li'>
                   <a
-  href="#"
-  className='terms__name'
-  title={t}
-  aria-label={`Add term ${t}`}
-  onClick={(e) => { e.preventDefault(); onPickTerm?.(t); }}
->
-  {t}
-</a>
+                    href="#"
+                    className='terms__name'
+                    title={t}
+                    aria-label={`Add term ${t}`}
+                    onClick={(e) => { e.preventDefault(); onPickTerm?.(t); }}
+                  >
+                    {t}
+                  </a>
                 </li>
               ))}
             </ul>
@@ -95,4 +122,3 @@ export function Terms ({ onPickTerm }) {
     </div>
   )
 }
-

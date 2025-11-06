@@ -1,4 +1,4 @@
-/* src/App.css (步驟 15 的 CSS 修正版 - 固定佈局) */
+/* src/App.css (步驟 17 的 CSS 修正版 - 移除 .card overflow) */
 
 /* --- 1. App.jsx 佈局樣式 (Logo 和 "My Collections" 按鈕) --- */
 /* (這部分保持不變) */
@@ -51,23 +51,23 @@
   height: 100%;
 }
 
-/* *** 修正點 2：左邊 A/B 兩張卡片的容器 *** */
+/* 左邊 A/B 兩張卡片的容器 */
 .left-column-container {
   display: flex;
-  flex-direction: column; /* 讓卡片垂直排列 */
-  gap: 16px; /* 卡片之間的間距 */
-  flex: 0 0 28%; /* *** 固定的寬度 (Figma 大約 28%) *** */
+  flex-direction: column;
+  gap: 16px;
+  flex: 0 0 28%;
   min-width: 240px;
   height: 100%;
 }
-/* *** 修正點 2：C 區塊 (Studies) 的固定寬度 *** */
+/* C 區塊 (Studies) 的固定寬度 */
 .card-C {
-  flex: 1 1 44%; /* *** 固定的寬度 (Figma 大約 44%) *** */
+  flex: 1 1 44%;
   min-width: 240px;
 }
-/* *** 修正點 2：D 區塊 (NIfTI) 的固定寬度 *** */
+/* D 區塊 (NIfTI) 的固定寬度 */
 .card-D {
-  flex: 0 0 28%; /* *** 固定的寬度 (Figma 大約 28%) *** */
+  flex: 0 0 28%;
   min-width: 240px;
 }
 
@@ -80,14 +80,16 @@
   flex-direction: column;
   color: #1a1a1a;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05), 0px 10px 30px rgba(0, 0, 0, 0.08);
-  overflow: auto; /* *** 讓卡片內部可以捲動 *** */
+  /* *** 關鍵修正：移除 overflow: auto *** */
+  /* *** 捲動功能下放到子元件 *** */
+  overflow: hidden; 
 }
 
-/* *** 修正點 2：A/B 卡片平分左欄高度 *** */
+/* A/B 卡片平分左欄高度 */
 .card-A, .card-B {
   background-color: #AADFC8;
-  flex: 1 1 50%; /* 讓 A 和 B 平分 .left-column-container 的高度 */
-  min-height: 150px; /* 最小高度 */
+  flex: 1 1 50%; 
+  min-height: 150px; 
 }
 
 .card-C, .card-D {
@@ -110,9 +112,6 @@
   margin: 0;
   flex-shrink: 0;
 }
-
-/* *** 修正點 2：刪除所有 .resizer 和 .resizer-horizontal 樣式 *** */
-/* (所有 resizer 樣式已被刪除) */
 
 /* --- 4. 修正 Studies 表格的樣式 (淺色主題) --- */
 /* (這部分保持不變) */
