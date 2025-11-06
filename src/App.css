@@ -1,104 +1,153 @@
+/* src/App.css (步驟 15 的 CSS 修正版 - 固定佈局) */
 
-/* App.css baseline (hoverless look is enforced inline in App.jsx too) */
-:root {
-  --bg: #fafafa;
-  --fg: #111827;
-  --muted: #6b7280;
-  --border: #e5e7eb;
-  --radius: 14px;
-  --primary-600: #2563eb;
-  --btn-font-size: 12px;
-  --btn-py: 6px;
-  --btn-px: 10px;
-  --btn-radius: 8px;
+/* --- 1. App.jsx 佈局樣式 (Logo 和 "My Collections" 按鈕) --- */
+/* (這部分保持不變) */
+.app-container { width: 100%; }
+.app-header-figma {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background-color: rgba(255, 255, 255, 0.1); 
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.logo a {
+  font-size: 24px;
+  font-weight: 800;
+  color: #012E36;
+  text-decoration: none;
+}
+.collection-button {
+  background-color: #bef264;
+  color: #1a2e05;
+  padding: 10px 20px;
+  border-radius: 99px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+.collection-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(190, 242, 100, 0.3);
+}
+.app-content {
+  max-width: 1440px; 
+  margin: 0 auto;
+  padding: 24px;
 }
 
-* { box-sizing: border-box; }
-html, body, #root { height: 100%; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--fg);
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
-}
-
+/* --- 2. MainPage.jsx 佈局樣式 (Figma 顏色) --- */
 .app {
-  max-width: none;
-  margin: 0;
-  padding: 18px 0 18px 18px;
+  height: calc(100vh - 130px);
 }
-
-.app__header { margin-bottom: 14px; }
-.app__title { margin: 0; font-size: 22px; font-weight: 800; letter-spacing: .2px; }
-.app__subtitle { margin-top: 4px; color: var(--muted); font-size: 13px; }
-
-.app__grid { display: flex; gap: 0; width: 100%; }
-.app__grid > .card { flex: 1 1 0; min-width: 240px; overflow: auto; }
-
-.resizer { width: 8px; cursor: col-resize; position: relative; user-select: none; touch-action: none; align-self: stretch; background: transparent; }
-.resizer::after { content:''; position:absolute; top:0; bottom:0; left:3px; width:2px; background: var(--border); transition: background .15s ease; }
-.resizer:hover::after { background: #9ca3af; }
-
-.card { background:white; border:1px solid var(--border); border-radius: var(--radius); padding:12px; }
-.card__title { font-weight:600; margin-bottom:10px; }
-.card--stack > .divider { height:1px; background:var(--border); margin:12px 0; }
-
-.hint { margin-top: 8px; color: var(--muted); font-size: 12px; }
-.hint__code { background:#f3f4f6; padding:2px 6px; border-radius:8px; }
-
-/* Downsized buttons (no hover/active change) */
-button, .btn, [role="button"], .button {
-  background: var(--primary-600);
-  color:#fff;
-  border:none;
-  border-radius: var(--btn-radius);
-  padding: var(--btn-py) var(--btn-px);
-  font-weight:600;
-  font-size: var(--btn-font-size);
-  line-height:1.1;
-  cursor:pointer;
-}
-button:hover, .btn:hover, [role="button"]:hover, .button:hover,
-button:active, .btn:active, [role="button"]:active, .button:active {
-  background: var(--primary-600);
-  color: #fff;
-}
-button:disabled, .btn:disabled { opacity:.55; cursor:not-allowed; }
-
-.card input[type="text"],
-.card input[type="search"],
-.card input[type="number"],
-.card select,
-.card textarea { width:100%; max-width:100%; display:block; }
-
-.app__footer { margin-top:16px; color:var(--muted); font-size:12px; display:flex; gap:10px; align-items:center; border-top:1px solid var(--border); padding-top:12px; }
-
-@media (max-width: 1023px) {
-  .app { padding: 12px; }
-  .app__grid { flex-direction: column; }
-  .resizer { display: none; }
-}
-
-
-/* QueryBuilder fallback styles (when Tailwind classes are not present) */
-.qb__input {
+.app__grid {
+  display: flex;
+  gap: 16px;
   width: 100%;
-  max-width: 100%;
-  display: block;
-  padding: 8px 12px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  outline: none;
+  height: 100%;
 }
 
-.qb__input:focus {
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+/* *** 修正點 2：左邊 A/B 兩張卡片的容器 *** */
+.left-column-container {
+  display: flex;
+  flex-direction: column; /* 讓卡片垂直排列 */
+  gap: 16px; /* 卡片之間的間距 */
+  flex: 0 0 28%; /* *** 固定的寬度 (Figma 大約 28%) *** */
+  min-width: 240px;
+  height: 100%;
+}
+/* *** 修正點 2：C 區塊 (Studies) 的固定寬度 *** */
+.card-C {
+  flex: 1 1 44%; /* *** 固定的寬度 (Figma 大約 44%) *** */
+  min-width: 240px;
+}
+/* *** 修正點 2：D 區塊 (NIfTI) 的固定寬度 *** */
+.card-D {
+  flex: 0 0 28%; /* *** 固定的寬度 (Figma 大約 28%) *** */
+  min-width: 240px;
 }
 
-
-/* Ensure QueryBuilder input doesn't collapse too narrow */
-.qb { width: 100%; }
-.qb__input { width: 100%; min-width: 420px; }
-@media (min-width: 1024px) {
-  .qb__input { min-width: 640px; }
+/* --- 3. 卡片樣式 (Figma 顏色) --- */
+.card {
+  border: none;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  color: #1a1a1a;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05), 0px 10px 30px rgba(0, 0, 0, 0.08);
+  overflow: auto; /* *** 讓卡片內部可以捲動 *** */
 }
+
+/* *** 修正點 2：A/B 卡片平分左欄高度 *** */
+.card-A, .card-B {
+  background-color: #AADFC8;
+  flex: 1 1 50%; /* 讓 A 和 B 平分 .left-column-container 的高度 */
+  min-height: 150px; /* 最小高度 */
+}
+
+.card-C, .card-D {
+  background-color: #FFFFFF;
+}
+
+.card--stack {
+  gap: 16px;
+}
+.card__title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #012E36;
+  margin-bottom: 12px;
+  flex-shrink: 0; 
+}
+.divider {
+  height: 1px;
+  background: #cbd5e1;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+/* *** 修正點 2：刪除所有 .resizer 和 .resizer-horizontal 樣式 *** */
+/* (所有 resizer 樣式已被刪除) */
+
+/* --- 4. 修正 Studies 表格的樣式 (淺色主題) --- */
+/* (這部分保持不變) */
+.card .studies-table,
+.card .studies-table th,
+.card .studies-table td {
+  color: #1a1a1a;
+}
+.card .studies-table a {
+  color: #2563eb;
+  text-decoration: none;
+}
+.card .studies-table a:hover {
+  text-decoration: underline;
+}
+.card .pagination-button {
+  border: 1px solid #cbd5e1;
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+.card .pagination-button:hover:not(:disabled) {
+  background-color: #f1f5f9;
+}
+.card .pagination-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* --- 5. 修正 CollectionPage (Figma 上的淺色) --- */
+/* (這部分保持不變) */
+.collection-page-container .text-3xl {
+  color: #1a1a1a;
+}
+.collection-page-container .text-lg {
+  color: #2563eb;
+}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
